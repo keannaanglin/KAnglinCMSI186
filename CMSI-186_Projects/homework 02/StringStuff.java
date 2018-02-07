@@ -20,7 +20,7 @@
  *  @version 1.1.0  2017-01-22  B.J. Johnson  Fill in methods to make the program actually work
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 import java.util.Set;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashSet;*/
 
 public class StringStuff {
 
@@ -33,12 +33,12 @@ public class StringStuff {
    * @return  boolean which is true if there is a vowel, or false otherwise
    */
    public static boolean containsVowel( String s ) {
-       String word = s.toUpperCase() || s.toLowerCase();
+       String word = s.toUpperCase();
        char[] words = word.toCharArray();
        for(int i = 0; i < words.length; i++) {
            char k = words[i];
            if(k == 'A' || k == 'a' || k == 'E' || 'e' || k == 'I' || k == 'i' || k == 'O' || k == 'o' || k == 'U' || k == 'u')
-           return true
+           return true;
        }
       return false;
    }
@@ -53,7 +53,7 @@ public class StringStuff {
    */
    public static boolean isPalindrome( String s ) {
        int k = s.length();
-       for (int i =0; i < (k/2); i++;) {
+       for (int i =0; i < (k/2); i++) {
            if(s.charAt(i) != s.charAt(k - i - 1)) {
                return false;
            }
@@ -74,7 +74,7 @@ public class StringStuff {
        String noOdds = "";
        for (int i = 0; i < s.length(); i++) {
            if(evenLetters.contains(Character.toString(s.charAt(i)))) {
-               noOdds = noOdds + (Character.toString(s.charAt(i)))
+               noOdds = noOdds + (Character.toString(s.charAt(i)));
            }
        }
 
@@ -92,9 +92,9 @@ public class StringStuff {
    public static String oddsOnly( String s ) {
        String oddLetters = "acegikmoqsuwyACEGIKMOQSUWY";
        String noEvens = "";
-       for (int = 0; i < s.length(); i++) {
+       for (int i = 0; i < s.length(); i++) {
            if(oddLetters.contains(Character.toString(s.charAt(i)))) {
-               noEvens = noEvens + (Character.toString(s.charAt(i)))
+               noEvens = noEvens + (Character.toString(s.charAt(i)));
            }
        }
       return noEvens;
