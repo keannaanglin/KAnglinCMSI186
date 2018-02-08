@@ -37,8 +37,9 @@ public class StringStuff {
        char[] words = word.toCharArray();
        for(int i = 0; i < words.length; i++) {
            char k = words[i];
-           if(k == 'A' || k == 'a' || k == 'E' || 'e' || k == 'I' || k == 'i' || k == 'O' || k == 'o' || k == 'U' || k == 'u')
-           return true;
+           if(k == 'A' || k == 'a' || k == 'E' || k == 'e' || k == 'I' || k == 'i' || k == 'O' || k == 'o' || k == 'U' || k == 'u' || k == 'Y' || k == 'y') {
+               return true;
+           }
        }
       return false;
    }
@@ -110,7 +111,12 @@ public class StringStuff {
    public static String evensOnlyNoDupes( String s ) {
        String evenLetters = "bdfhjlnprtvxzBDFHJLNPRTVXZ";
        String noOdds = "";
-      return new String( "HJ" );
+       for (int i = 0; i < s.length(); i++) {
+           if(!(evenLetters.contains(Character.toString(s.charAt(i))))) {
+               noOdds = noOdds + (Character.toString(s.charAt(i)));
+           }
+       }
+      return noOdds;
    }
 
   /**
@@ -121,7 +127,14 @@ public class StringStuff {
    * @return  String containing the &quot;odd&quot; letters from the input without duplicates
    */
    public static String oddsOnlyNoDupes( String s ) {
-      return new String( "IK" );
+       String oddLetters = "acegikmoqsuwyACEGIKMOQSUWY";
+       String noEvens = "";
+       for (int i = 0; i < s.length(); i++) {
+           if(!(oddLetters.contains(Character.toString(s.charAt(i))))) {
+               noEvens = noEvens + (Character.toString(s.charAt(i)));
+           }
+       }
+      return noEvens;
    }
 
   /**
