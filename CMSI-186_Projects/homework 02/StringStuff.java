@@ -109,15 +109,16 @@ public class StringStuff {
    * @return  String containing the &quot;even&quot; letters from the input without duplicates
    */
    public static String evensOnlyNoDupes( String s ) {
-       String evenLetters = "bdfhjlnprtvxzBDFHJLNPRTVXZ";
-       String noOdds = "";
-       for (int i = 0; i < s.length(); i++) {
-           if(!(evenLetters.contains(Character.toString(s.charAt(i))))) {
-               noOdds = noOdds + (Character.toString(s.charAt(i)));
-           }
-       }
-      return noOdds;
-   }
+            s = evensOnly(s);
+            String noDupes = "";
+            for ( int i = 0; i < s.length(); i++ ) {
+              if (!noDupes.contains(Character.toString(s.charAt(i)))) {
+                noDupes = noDupes + (Character.toString(s.charAt(i)));
+              }
+            }
+             System.out.println("new string output" + noDupes);
+             return new String( noDupes );
+          }
 
   /**
    * Method to return the characters in a string that correspond to the &quot;ODD&quot; index
@@ -127,15 +128,16 @@ public class StringStuff {
    * @return  String containing the &quot;odd&quot; letters from the input without duplicates
    */
    public static String oddsOnlyNoDupes( String s ) {
-       String oddLetters = "acegikmoqsuwyACEGIKMOQSUWY";
-       String noEvens = "";
-       for (int i = 0; i < s.length(); i++) {
-           if(!(oddLetters.contains(Character.toString(s.charAt(i))))) {
-               noEvens = noEvens + (Character.toString(s.charAt(i)));
-           }
+       s = oddsOnly(s);
+       String noDupes = "";
+       for ( int i = 0; i < s.length(); i++ ) {
+         if (!noDupes.contains(Character.toString(s.charAt(i)))) {
+           noDupes = noDupes + (Character.toString(s.charAt(i)));
+         }
        }
-      return noEvens;
-   }
+        System.out.println("new string output" + noDupes);
+        return new String( noDupes );
+     }
 
   /**
    * Method to return the reverse of a string passed as an argument
