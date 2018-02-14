@@ -52,9 +52,9 @@ public class Die {
    * Note: parameter must be checked for validity; invalid value must throw "IllegalArgumentException"
    */
    public Die( int nSides ) {
-       nSides = sides;
+       sides = nSides;
        if (sides < 4) {
-           throw  IllegalArgumentException("You need more sides!");
+            IllegalArgumentException("You need more sides!!!");
        }
    }
 
@@ -63,8 +63,8 @@ public class Die {
    * @return  integer value of the result of the roll, randomly selected
    */
    public int roll() {
-       int roll = (int)((Math.random() * sides) + 1);
-       return roll;
+       pips = (int)((Math.random() * sides) + 1);
+       return pips;
    }
 
   /**
@@ -75,7 +75,7 @@ public class Die {
    * @return the pip count of THIS die instance
    */
    public int getValue() {
-      return 0;
+      return this.pips;
    }
 
   /**
@@ -84,6 +84,8 @@ public class Die {
    * @throws      IllegalArgumentException
    */
    public void setSides( int sides ) {
+       this.sides = sides;
+       //return sides;
    }
 
   /**
@@ -91,7 +93,7 @@ public class Die {
    * @return String representation of this Die
    */
    public String toString() {
-      return "";
+      return "[" + Integer.toString(this.pips) + "]";
    }
 
   /**
@@ -99,7 +101,8 @@ public class Die {
    * @return String representation of this Die
    */
    public static String toString( Die d ) {
-      return "";
+
+      return "[" + Integer.toString(d.pips) + "]";
    }
 
   /**
