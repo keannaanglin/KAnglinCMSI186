@@ -54,7 +54,7 @@ public class Die {
    public Die( int nSides ) {
        sides = nSides;
        if (sides < 4) {
-            IllegalArgumentException("You need more sides!!!");
+           throw new IllegalArgumentException("You need more sides!!!");
        }
    }
 
