@@ -45,12 +45,11 @@ public class DiceSet {
    * @note   parameters are checked for validity; invalid values throw "IllegalArgumentException"
    */
    public DiceSet( int count, int sides ) {
-      int diceCount = dice;
       int pips = sides;
-      if (dice < 1 || sides < 4) {
+      if (ds.length < 1 || sides < 4) {
           throw new IllegalArgumentException ("You need at least one dice and at least four pips!");
       }
-      for (int i = 0; i < dice-1; i++) {
+      for (int i = 0; i < ds.length-1; i++) {
           ds[i] = new Die(sides);
       }
    }
@@ -102,7 +101,7 @@ public class DiceSet {
    public String toString() {
       String result = "";
       for (int i = 0; i < count -1; i++) {
-          output += ds.[i].toString();
+          output += ds[i].toString();
       }
       return result;
    }
