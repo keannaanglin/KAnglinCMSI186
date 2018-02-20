@@ -44,15 +44,26 @@ public class DiceSet {
    * @throws IllegalArgumentException if one or both arguments don't make sense
    * @note   parameters are checked for validity; invalid values throw "IllegalArgumentException"
    */
-   public DiceSetEmpty( int count, int sides ) {
-      ds = new Die[ count ];
+   public DiceSet( int count, int sides ) {
+      int diceCount = dice;
+      int pips = sides;
+      if (dice < 1 || sides < 4) {
+          throw new IllegalArgumentException ("You need at least one dice and at least four pips!");
+      }
+      for (int i = 0; i < dice-1; i++) {
+          ds[i] = new Die(sides);
+      }
    }
 
   /**
    * @return the sum of all the dice values in the set
    */
    public int sum() {
-      return 0;
+       int sum = 0;
+       for (Die i : ds) {
+           sum += i;
+       }
+       return sum;
    }
 
   /**
@@ -61,6 +72,9 @@ public class DiceSet {
    *  the values of the dice in the set
    */
    public void roll() {
+       for (int i = 0; i < ds.length-1; i++) {
+           ds[i].roll();
+       }
    }
 
   /**
@@ -70,7 +84,7 @@ public class DiceSet {
    * @trhows IllegalArgumentException if the index is out of range
    */
    public int rollIndividual( int dieIndex ) {
-      return 0;
+      return ds[dieIndex].roll();
    }
 
   /**
@@ -79,7 +93,7 @@ public class DiceSet {
    * @trhows IllegalArgumentException if the index is out of range
    */
    public int getIndividual( int dieIndex ) {
-      return -999;
+      return ds[dieIndex].getValue();
    }
 
   /**
@@ -87,6 +101,9 @@ public class DiceSet {
    */
    public String toString() {
       String result = "";
+      for (int i = 0; i < count -1; i++) {
+          output += ds.[i].toString();
+      }
       return result;
    }
 
@@ -94,14 +111,19 @@ public class DiceSet {
    * @return Class-wide version of the preceding instance method
    */
    public static String toString( DiceSet ds ) {
-      return "";
+      return ds.toString();
    }
 
   /**
    * @return  tru iff this set is identical to the set passed as an argument
    */
    public boolean isIdentical( DiceSet ds ) {
-      return true;
+       if (count == ds.count) {
+           return true;
+       } else if (sides == ds.sides) {
+           return true;
+       }
+      return false;
    }
   /**
    * A little test main to check things out
