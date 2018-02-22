@@ -60,7 +60,7 @@ public class DiceSet {
    public int sum() {
        int sum = 0;
        for (Die i : ds) {
-           sum += i;
+           sum += i.getValue();
        }
        return sum;
    }
@@ -101,7 +101,7 @@ public class DiceSet {
    public String toString() {
       String result = "";
       for (int i = 0; i < count -1; i++) {
-          output += ds[i].toString();
+          result += new Integer(ds[i].getValue()).toString() + " ";
       }
       return result;
    }
