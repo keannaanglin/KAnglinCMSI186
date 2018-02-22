@@ -109,7 +109,22 @@ public class Die {
    * A little test main to check things out
    */
    public static void main( String[] args ) {
-      System.out.println( "Hello world from the Die class..." );
+      Die d = null;
+      for (int i = 1; i <= 4; i++) {
+          try {d = new Die(i);}
+          catch (IllegalArgumentException iae) {System.out.println("Not enough sides!! Enter a new value!");}
+      }
+
+      for (int i = 5; i <= 15; i++) {
+          try {
+              d = new Die(i);
+              System.out.println( "Roll test: " + i + "sided die");
+              System.out.println(" Rolled a " + d.roll());
+              System.out.println(" Rolled a " + d.getValue());
+              System.out.println(" Rolled a" + d.toString());
+              System.out.println(" Rerolled a " + d.roll());
+          } catch (IllegalArgumentException iae) {System.out.println("IllegalArgumentException");}
+      }
    }
 
 }
