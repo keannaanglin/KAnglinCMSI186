@@ -101,7 +101,7 @@ public class DiceSet {
    public String toString() {
       String result = "";
       for (int i = 0; i < count -1; i++) {
-          result += new Integer(ds[i].getValue()).toString() + " ";
+         result += Integer.toString((ds[i].getValue())) + " ";
       }
       return result;
    }
@@ -128,7 +128,25 @@ public class DiceSet {
    * A little test main to check things out
    */
    public static void main( String[] args ) {
-      // You do this part!
+       DiceSet a = null;
+       try { a = new DiceSet(1, 1);}
+       catch (IllegalArgumentException iae ) {System.out.println(" Not enough sides!");}
+       try { a = new DiceSet(1,2);}
+       catch(IllegalArgumentException iae) {System.out.println(" Not enough sides!!");}
+       try {a = new DiceSet(1,3);}
+       catch(IllegalArgumentException iae) {System.out.println(" Not enough sides!!");}
+       try {a = new DiceSet(0,1);}
+       catch(IllegalArgumentException iae) {System.out.println(" Not enough die and not enough sides!");}
+
+       try {
+           a = new DiceSet(2,4);
+           System.out.println("Sum of the die" + a.sum());
+           a.roll();
+           System.out.println(" Rolled all die");
+           System.out.println(" Rolling die at index 0:" + a.rollIndividual(0));
+           System.out.println(" Getting value of the die at index 0:" + a.getIndividual(0));
+           System.out.println("String of die: " + a.toString());
+       } catch (IllegalArgumentException iae) {System.out.println(" IllegalArgumentException");}
    }
 
 }
