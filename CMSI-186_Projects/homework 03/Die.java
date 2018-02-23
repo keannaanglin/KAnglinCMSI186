@@ -53,6 +53,7 @@ public class Die {
    */
    public Die( int nSides ) {
        sides = nSides;
+       pips = 0;
        if (sides < 4) {
            throw new IllegalArgumentException("You need more sides!!!");
        }
@@ -63,7 +64,7 @@ public class Die {
    * @return  integer value of the result of the roll, randomly selected
    */
    public int roll() {
-       pips = (int)((Math.random() * sides) + 1);
+       pips = (int)(Math.floor((Math.random() * sides) + 1));
        return pips;
    }
 
@@ -75,7 +76,7 @@ public class Die {
    * @return the pip count of THIS die instance
    */
    public int getValue() {
-      return this.pips;
+      return pips;
    }
 
   /**
@@ -93,7 +94,7 @@ public class Die {
    * @return String representation of this Die
    */
    public String toString() {
-      return "[" + Integer.toString(this.pips) + "]";
+      return "[" + pips + "]";
    }
 
   /**
@@ -101,8 +102,7 @@ public class Die {
    * @return String representation of this Die
    */
    public static String toString( Die d ) {
-
-      return "[" + Integer.toString(d.pips) + "]";
+      return d.toString();
    }
 
   /**
