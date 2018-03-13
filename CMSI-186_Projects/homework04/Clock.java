@@ -129,7 +129,7 @@ public class Clock {
    *  @return String value of the current clock
    */
    public String toString() {
-      return Double.toString(Math.floor(getTotalSeconds() / 3600)) + " : " + Double.toString((getTotalSeconds() / 60) % 60) + " : " + Double.toString(getTotalSeconds());
+      return Double.toString(Math.floor(getTotalSeconds() / 3600)) + " : " + Double.toString((getTotalSeconds() / 60) % 60) + " : " + Double.toString(getTotalSeconds() % 60);
    }
 
   /**
