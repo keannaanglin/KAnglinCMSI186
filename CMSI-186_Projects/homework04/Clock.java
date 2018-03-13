@@ -34,6 +34,9 @@ public class Clock {
   /**
    *  Constructor goes here
    */
+   public Clock() {
+       timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
+   }
    public Clock(double angle, double timeSlice) {
        targetAngle = angle % 360;
        this.timeSlice = timeSlice;
