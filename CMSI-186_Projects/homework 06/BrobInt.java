@@ -127,7 +127,14 @@ public class BrobInt {
    *  note also that this must check for the '+' and '-' sign digits
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public boolean validateDigits() {
-
+       int input = number; /// need to change to use the throw new exception!!//
+       while(input != 0){
+           if(input % 10 > 1) {
+               return false;
+           }
+           input = input / 10;
+       }
+       return true;
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
