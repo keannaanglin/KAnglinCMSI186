@@ -43,10 +43,11 @@ public class BrobInt {
    public static final BrobInt MIN_LONG = new BrobInt( new Long( Long.MIN_VALUE ).toString() );
 
   /// These are the internal fields
-   private String internalValue = "";        // internal String representation of this GinormousInt
+   private String binaryValue = "";        // internal String representation of this GinormousInt
    private byte   sign          = 0;         // "0" is positive, "1" is negative
    private String reversed      = "";        // the backwards version of the internal String representation
    private byte[] byteVersion   = null;      // byte array for storing the string values; uses the reversed string
+   private String inputValue = "";
 
   /**
    *  Constructor takes a string and assigns it to the internal storage, checks for a sign character
@@ -56,8 +57,10 @@ public class BrobInt {
    */
    public BrobInt( String value ) {
        super();
+       this.inputValue = value;  // HARDCODED FOR NOW. SHOULD BE  = value;
+       this.validateDigits();
 
-       String quotient = "-37"; // HARDCODED FOR NOW. SHOULD BE  String quotient = value;
+       String quotient = this.inputValue;
 
        // need to set sign
         if(quotient.charAt(0) == '-') {
@@ -84,10 +87,8 @@ public class BrobInt {
        }
        // reverse string to get binary representation!
         for (int i = this.reversed.length() - 1; i >= 0; i--) {
-            this.internalValue = this.internalValue + this.reversed.charAt(i);
+            this.binaryValue = this.binaryValue + this.reversed.charAt(i);
         }
-
-        System.exit(0);
 
        // need to set byte version as ?
 
@@ -127,15 +128,16 @@ public class BrobInt {
    *  note also that this must check for the '+' and '-' sign digits
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public boolean validateDigits() {
-       int input = number; /// need to change to use the throw new exception!!//
-       while(input != 0){
-           if(input % 10 > 1) {
-               return false;
+       String inputValue = this.inputValue;
+       for (int i = 0; i < inputValue.length(); i++) {
+           char Digit = inputValue.charAt(i);
+            if (i == 0 && !(Character.isDigit(Digit) || Digit == '-')) {
+                throw new UnsupportedOperationException("This is not valid !!");
+            }else if (i != 0 && !Character.isDigit(Digit)) {
+               throw new UnsupportedOperationException("This is not valid!!");
            }
-           input = input / 10;
        }
        return true;
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -143,6 +145,11 @@ public class BrobInt {
    *  @return GinormousInt that is the reverse of the value of this GinormousInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt reverser() {
+       //convert internal value to base 10 and then reverse the digits //
+       BrobInt obj = new BrobInt("0");
+       for (int i = this.reversed.length() - 1; i >= 0; i--) { //need to incorporate throw UnsupportedOperationException//
+           this.binaryValue = this.binaryValue + this.reversed.charAt(i);
+       }
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
@@ -152,8 +159,12 @@ public class BrobInt {
    *  @param  gint         GinormousInt to reverse its value
    *  @return GinormousInt that is the reverse of the value of the GinormousInt passed as argument
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public static BrobInt reverser( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+   public static BrobInt reverser( BrobInt bint ) {
+    /*   BrobInt obj = new BrobInt("0");
+       for (int i = this.reversed.length() - 1; i >= 0; i--){
+           this.binaryValue = this.binaryValue + this.reversed.charAt(i);
+       }*/
+      throw new UnsupportedOperationException( "ddd" );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -161,17 +172,109 @@ public class BrobInt {
    *  @param  gint         GinormousInt to add to this
    *  @return GinormousInt that is the sum of the value of this GinormousInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt add( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-   }
+   public BrobInt add( BrobInt bint ) {
+       String input1 = this.binaryValue; // e.g. "11100001"
+       String input2 = bint.toBinary();
+       while (input1.length() > input2.length()){
+           input2 = "0" + input2;
+       }
+       while (input2.length() > input1.length()) {
+           input1 = "0" + input1;
+       }
+       String sum = "";
+       int carry = 0;
+
+       for(int i= input1.length()-1; i >= 0; i--) {
+           int almostSum = Character.getNumericValue(input1.charAt(i)) + Character.getNumericValue(input2.charAt(i)) + carry;
+           if(almostSum == 0) {
+               sum = "0" + sum;
+               carry = 0;
+           }else if (almostSum == 1) {
+               sum = "1" + sum;
+               carry = 0;
+           }else if (almostSum == 2) {
+               sum = "0" + sum;
+               carry = 1;
+           }else if (almostSum == 3) {
+              sum = "1" + sum;
+               carry = 1;
+           }
+
+       }
+       if(carry == 1) {
+           sum = "1" + sum;
+       }
+       System.out.println(sum);
+       // first convert sum to decimal!!
+       return new BrobInt(sum);
+
+    }
+
+  public String toBinary() {
+      return this.binaryValue;
+  }
+
+  public String toDecimal() {
+     // String startingValue = Integer.toString(input); //this is the value that is entered as an integer and we convert it to string//
+      //String result;
+
+
+
+      //  int decimal = 0; //the result of what i am about to do, but i guess it starts as zero
+      // int firstPartofDecimal = ((("0" * Character.getNumericValue(sum.charAt(i))) * 2) + Character.getNumericValue(sum.charAt(i)));
+      // if(int i = sum.length()-1; i >= 0; /* i want it to end here i just dont know how to express it*/) { //this is JUST for the first time around because you have to multiply the first thing by 0
+      //     firstPartofDecimal = ((("0" * Character.getNumericValue(sum.charAt(i))) * 2) + Character.getNumericValue(sum.charAt(i)));
+      // } // the next statement is supposed to be for after the first number because then we do not necessarily have to multiple by 0 again
+      // while(int i = sum.length()-2; i >=0; i--) { //i know this is backwards because it is not the first number//
+      //    decimal = firstPartofDecimal + (Character.getNumericValue(sum.charAt(i))) * 2 + Character.getNumericValue(sum.char(i));
+      throw new UnsupportedOperationException ("\n Sorry this has not been implemented");
+      }
+      //return decimal;
+
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to subtract the value of a GinormousIntk passed as argument to this GinormousInt
    *  @param  gint         GinormousInt to subtract from this
    *  @return GinormousInt that is the difference of the value of this GinormousInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt subtract( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+   public BrobInt subtract( BrobInt bint) {
+       String top = this.binaryValue;
+       String bottom = bint.toBinary();
+       String result = "";
+       int borrow = 0;
+       boolean negative = false;
+       while (top.length() > bottom.length()){
+           bottom = "0" + bottom;
+       }
+       if(top.length() < bottom.length()) {
+           negative = true;
+       }
+       while (bottom.length() > top.length()) {
+           top = "0" + top;
+       }
+       for(int i = top.length()-1; i >= 0; i--) {
+           if(top.charAt(i) == '1' && bottom.charAt(i) == '1') {
+               result = "0" + result;
+           }
+           else if(top.charAt(i) == '1' && bottom.charAt(i) == '0') {
+               result = "1" + result;
+           }
+           else if(top.charAt(i) == '0' && bottom.charAt(i) == '1') {
+               int j = i;
+               while(top.charAt(j) != '1') {
+                   top.charAt(j) = '1';
+                   j--;
+               }
+               result = top.charAt(i-1) + result;
+           }
+           else if(top.charAt(i) == '0' && bottom.charAt(i) == '0') {
+               result = "0" + result;
+           }
+       }
+       if(negative) {
+           this.sign = 1;
+       }
+       return result;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,8 +282,31 @@ public class BrobInt {
    *  @param  gint         GinormousInt to multiply by this
    *  @return GinormousInt that is the product of the value of this GinormousInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt multiply( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+   public BrobInt multiply( BrobInt bint ) {
+
+// take in two strings of numbers
+// convert those numbers to binary
+// multiply them in binary
+// get result in binary
+// convert binary number back to decimal version
+
+
+      /*String firstValue = this.binaryValue;
+      String secondValue = bint.toBinary();
+      String sum = "";
+
+       if (firstValue == 1){
+           System.out.println(firstValue + " : " + secondValue);
+           return sum + secondValue;
+       }
+       if (firstValue % 2 == 0) {
+           System.out.println( firstValue + " : " + secondValue);
+       } else {
+           System.out.println(firstValue + " : " + secondValue);
+           sum = sum + secondValue;
+       }
+       return multiply(firstValue/2, secondValue * 2).toDecimal();*/
+       throw new UnsupportedOperationException ("\n Sorry this has not been implemented");
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -188,7 +314,7 @@ public class BrobInt {
    *  @param  gint         GinormousInt to divide this by
    *  @return GinormousInt that is the dividend of this GinormousInt divided by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt divide( BrobInt gint ) {
+   public BrobInt divide( BrobInt bint ) {
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
@@ -209,7 +335,7 @@ public class BrobInt {
    *        THAT was easy.....
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public int compareTo(BrobInt gint ) {
-      return (internalValue.compareTo( gint.toString() ));
+      return (binaryValue.compareTo( gint.toString() ));
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -220,7 +346,7 @@ public class BrobInt {
    *        also using the java String "equals()" method -- THAT was easy, too..........
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public boolean equals( BrobInt gint ) {
-      return (internalValue.equals( gint.toString() ));
+      return (binaryValue.equals( gint.toString() ));
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -244,9 +370,9 @@ public class BrobInt {
    *  @return String  which is the String representation of this GinormousInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
-       // convert internalValue to decimal
+       // convert binaryValue to decimal
        // return that in string form
-
+return "";
 
    }
 
