@@ -93,7 +93,10 @@ public class BrobInt {
        // need to set byte version as ?
 
    }
-
+   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    *  Method to divide a String by two
+    *  @return  result of the long division
+    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String divideByTwo(String dividend) {
        String result = "";
        // LONG DIVISION
@@ -160,7 +163,7 @@ public class BrobInt {
    *  @return GinormousInt that is the reverse of the value of the GinormousInt passed as argument
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static BrobInt reverser( BrobInt bint ) {
-    /*   BrobInt obj = new BrobInt("0");
+      /*BrobInt obj = new BrobInt("0");
        for (int i = this.reversed.length() - 1; i >= 0; i--){
            this.binaryValue = this.binaryValue + this.reversed.charAt(i);
        }*/
@@ -209,27 +212,36 @@ public class BrobInt {
        return new BrobInt(sum);
 
     }
-
-  public String toBinary() {
+    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Method to convert decimal number to its binary equivalent
+     *  @return decimal number that is in its binary equivalent
+     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+     public String toBinary() {
       return this.binaryValue;
-  }
-
+    }
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   *  Method to return decimal version of binary value
+   *  @return BigInteger that is the decimal version of the answer
+   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   public String toDecimal() {
-     // String startingValue = Integer.toString(input); //this is the value that is entered as an integer and we convert it to string//
-      //String result;
-
-
-
-      //  int decimal = 0; //the result of what i am about to do, but i guess it starts as zero
-      // int firstPartofDecimal = ((("0" * Character.getNumericValue(sum.charAt(i))) * 2) + Character.getNumericValue(sum.charAt(i)));
-      // if(int i = sum.length()-1; i >= 0; /* i want it to end here i just dont know how to express it*/) { //this is JUST for the first time around because you have to multiply the first thing by 0
-      //     firstPartofDecimal = ((("0" * Character.getNumericValue(sum.charAt(i))) * 2) + Character.getNumericValue(sum.charAt(i)));
-      // } // the next statement is supposed to be for after the first number because then we do not necessarily have to multiple by 0 again
-      // while(int i = sum.length()-2; i >=0; i--) { //i know this is backwards because it is not the first number//
-      //    decimal = firstPartofDecimal + (Character.getNumericValue(sum.charAt(i))) * 2 + Character.getNumericValue(sum.char(i));
-      throw new UnsupportedOperationException ("\n Sorry this has not been implemented");
-      }
-      //return decimal;
+    // return this.toDecimal;//
+     }
+     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Method to convert binary back to decimal
+     *  @return number in decimal form
+     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+     public static String binaryToDecimal(boolean[] binary) {
+        /* String number = "0";
+         int i = 0;
+         while (i < binaryValue.length) {
+             number = add(number);
+             if(binary[i]) {
+                 number = add(number);
+             }
+             i++;
+         }*/
+         //return number;
+     }
 
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
