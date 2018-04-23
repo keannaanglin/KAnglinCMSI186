@@ -246,9 +246,9 @@ public class BrobInt {
          return number;
      }
     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     *  Method multiply a binary number by 2
-     *  @param  gint
-     *  @return
+     *  Method to add one (part of converting back to decimal)
+     *  @param  String decimal
+     *  @return sum
      *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
      public static String addOne(String decimal) {
          String sum = "";
@@ -270,9 +270,9 @@ public class BrobInt {
          return sum;
      }
      /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      *  Method to multiply the value of a GinormousIntk passed as argument to this GinormousInt
-      *  @param  gint         GinormousInt to multiply by this
-      *  @return GinormousInt that is the product of the value of this GinormousInt and the one passed in
+      *  Method to multiply by 2 (getting number from binary to decimal)
+      *  @param String s
+      *  @return sum
       *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
       public static String multByTwo(String s) {
           String sum = "";
