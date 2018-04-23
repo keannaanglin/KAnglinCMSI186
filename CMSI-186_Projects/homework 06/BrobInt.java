@@ -163,11 +163,12 @@ public class BrobInt {
    *  @return GinormousInt that is the reverse of the value of the GinormousInt passed as argument
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static BrobInt reverser( BrobInt bint ) {
-      /*BrobInt obj = new BrobInt("0");
-       for (int i = this.reversed.length() - 1; i >= 0; i--){
-           this.binaryValue = this.binaryValue + this.reversed.charAt(i);
-       }*/
-      throw new UnsupportedOperationException( "ddd" );
+      String inputValue = bint.toString();
+      String reversedValue = "";
+       for (int i = inputValue.length() - 1; i >= 0; i--){
+           reversedValue = inputValue.charAt(i) + reversedValue;
+       }
+      return new BrobInt(reversedValue);
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -224,24 +225,94 @@ public class BrobInt {
    *  @return BigInteger that is the decimal version of the answer
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   public String toDecimal() {
-    // return this.toDecimal;//
+    return this.inputValue;
      }
      /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      *  Method to convert binary back to decimal
      *  @return number in decimal form
      *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-     public static String binaryToDecimal(boolean[] binary) {
-        /* String number = "0";
+     public static String binaryToDecimal(String binary) {
+         String number = "0";
          int i = 0;
-         while (i < binaryValue.length) {
-             number = add(number);
-             if(binary[i]) {
-                 number = add(number);
+         while (i < binary.length()) {
+             // multiply number by two
+             number = multByTwo(number);
+             // add next digit
+             if (binary.charAt(i) == '1') {
+                number = addOne(number);
              }
              i++;
-         }*/
-         //return number;
+         }
+         return number;
      }
+    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Method multiply a binary number by 2
+     *  @param  gint
+     *  @return
+     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+     public static String addOne(String decimal) {
+         String sum = "";
+         int carry = 0;
+         for(int i= decimal.length()-1; i >= 0; i--) {
+             int lastDigit = Character.getNumericValue(decimal.charAt(i));
+             if(lastDigit != 9) {
+                 int newDigit = 1 + lastDigit;
+                 sum = decimal.substring(0,i) + newDigit + decimal.substring((i + 1), decimal.length());
+                 return sum;
+             } else {
+                carry = 1;
+                sum = decimal.substring(0, i) + "0" + decimal.substring((i + 1), decimal.length());
+             }
+         }
+         if(carry == 1) {
+             sum = "1" + sum;
+         }
+         return sum;
+     }
+     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      *  Method to multiply the value of a GinormousIntk passed as argument to this GinormousInt
+      *  @param  gint         GinormousInt to multiply by this
+      *  @return GinormousInt that is the product of the value of this GinormousInt and the one passed in
+      *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+      public static String multByTwo(String s) {
+          String sum = "";
+        int partialSum = 0;
+
+        int currentDigit = Integer.parseInt(s.substring(s.length() - 1, s.length()));
+        partialSum = currentDigit + currentDigit;
+
+        int i = s.length() - 1;
+
+        int carriedVal = 0;
+        String strPartialSum = "";
+        int pSumC = 0;
+
+        while(i >= 0) {
+            currentDigit = Integer.parseInt(s.substring(i, i + 1));
+            partialSum = currentDigit + currentDigit;
+            pSumC = currentDigit + currentDigit;
+            if(partialSum < 10) {
+                partialSum += carriedVal;
+                sum += partialSum;
+                carriedVal = 0;
+            } else {
+                partialSum += carriedVal;
+                strPartialSum = Integer.toString(partialSum);
+                carriedVal = 1;
+                partialSum = Integer.parseInt(strPartialSum.substring(1,2));
+                sum += partialSum;
+            }
+
+            if (i == 0 && pSumC > 9) {
+                sum += "1";
+            }
+
+            i--;
+        }
+
+        sum = new StringBuilder(sum).reverse().toString();
+        return sum;
+    }
 
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -274,7 +345,7 @@ public class BrobInt {
            else if(top.charAt(i) == '0' && bottom.charAt(i) == '1') {
                int j = i;
                while(top.charAt(j) != '1') {
-                   top.charAt(j) = '1';
+                   top = top.substring(0, j) + "1" + top.substring((j + 1), top.length());
                    j--;
                }
                result = top.charAt(i-1) + result;
@@ -286,7 +357,7 @@ public class BrobInt {
        if(negative) {
            this.sign = 1;
        }
-       return result;
+       return new BrobInt(binaryToDecimal(result));
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -382,9 +453,8 @@ public class BrobInt {
    *  @return String  which is the String representation of this GinormousInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
-       // convert binaryValue to decimal
-       // return that in string form
-return "";
+
+return this.inputValue;
 
    }
 
