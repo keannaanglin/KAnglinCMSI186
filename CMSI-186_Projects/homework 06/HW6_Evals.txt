@@ -1,0 +1,57 @@
+
+Evaluation for homework 06: Brobdingnagian Integer
+   and associated Fibonacci sequence using BrobInt
+
+BrobInt class
+Includes running BrobIntTester test harness
+Includes running Fibonacci requesting several numbers
+   View h6.bat to see test parameters used
+   View testresults.txt to see resulting output
+NOTE: "Brobdingnagian Integer" is abbreviated "BrobInt"
+=======================================================
+
+A total of one point each for the following,
+   except where noted:
+
+BrobInt class file exists           : 1 point
+BrobInt constructor                 : 1 point
+BrobInt add method                  : 1 point
+BrobInt subtract method             : 1 point
+BrobInt validate digits method      : 1 point
+BrobInt reverser method [of 2]      : 2 points
+
+BrobInt Tester class                : 1 point
+BrobInt add [of 9]                  : 0 points
+BrobInt subtract [of 7]             : 0 points
+BrobInt mult [of 7, 1 pt. EC]       : 0 point
+BrobInt div [of 2, 1 pt. EC]        : 0 point
+BrobInt remainder [of 2, 1 pt. EC]  : 0 point
+
+Fib class file exists               : 1 point
+Fib constructor                     : 1 point
+Fib input error handling            : 0 point
+Fib output correct number [of 4]    : 0 points
+
+Minimum three files in repo (3)     : 3 points
+All files compile (3)               : 3 points
+Coding Style                        : 2 points
+Javadocs                            : 1 point
+
+Total possible score: 40 points
+[EC] adds a total of:  3 points
+
+Evaluation
+==========
+   16 out of 40 = 40.00% which is an F
+
+Your code all compiles, but unfortunately it doesn't run.  When
+I ran the BrobIntTester, I got almost no output, and what I did
+get didn't match any of the desired output for the tests.  Also
+when I ran your Fibonacci program it basically never finishes,
+because you used recursion.  I warned you guys about this in class
+and recommended you NOT use it.
+
+Feel free to come by during office hours if you have questions
+or want help on this next assignment.
+
+Nice work!
