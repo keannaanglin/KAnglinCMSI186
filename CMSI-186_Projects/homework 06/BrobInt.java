@@ -19,7 +19,7 @@
  *                                     start work on subtractByte and subtractInt methods
  *
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class BrobInt {
 
@@ -37,10 +37,10 @@ public class BrobInt {
 
   /// Some constants for other intrinsic data types
   ///  these can help speed up the math if they fit into the proper memory space
-   public static final BrobInt MAX_INT  = new BrobInt( new Integer( Integer.MAX_VALUE ).toString() );
+   /*public static final BrobInt MAX_INT  = new BrobInt( new Integer( Integer.MAX_VALUE ).toString() );
    public static final BrobInt MIN_INT  = new BrobInt( new Integer( Integer.MIN_VALUE ).toString() );
    public static final BrobInt MAX_LONG = new BrobInt( new Long( Long.MAX_VALUE ).toString() );
-   public static final BrobInt MIN_LONG = new BrobInt( new Long( Long.MIN_VALUE ).toString() );
+   public static final BrobInt MIN_LONG = new BrobInt( new Long( Long.MIN_VALUE ).toString() );*/
 
   /// These are the internal fields
    private String binaryValue = "";        // internal String representation of this GinormousInt
@@ -56,42 +56,42 @@ public class BrobInt {
    *  @param  value  String value to make into a GinormousInt
    */
    public BrobInt( String value ) {
-       super();
-       this.inputValue = value;  // HARDCODED FOR NOW. SHOULD BE  = value;
-       this.validateDigits();
+       inputValue = value;  // HARDCODED FOR NOW. SHOULD BE  = value;
+       validateDigits();
 
-       String quotient = this.inputValue;
+       String quotient = inputValue;
 
        // need to set sign
         if(quotient.charAt(0) == '-') {
-            this.sign = 1;
+            sign = 1;
             quotient = quotient.substring(1, quotient.length());
         }
-        else {
-            this.sign = 0;
+        ArrayList <String> parts = new ArrayList<String>();
+        for(int i = 0; i < quotient.length(); i += 8) {
+            parts.add(quotient.substring(i, Math.min(i + 8, quotient.length())));
+            //still need to convert to binary, but does that need to go in here?
         }
-
-       while(Integer.parseInt(quotient)!= 0) {
-           // look at last digit
-           // if odd, remainder is 1
-           char lastChar = quotient.charAt(quotient.length()- 1);
-           if(Character.getNumericValue(lastChar) % 2 == 0){
-               // remainder is zero so quotient is even
-               this.reversed = this.reversed + "0";
-           } else {
-               //  remainder is ONE
-               this.reversed = this.reversed + "1";
-           }
-
-           quotient = divideByTwo(quotient);
+        binaryValue = "";
+        reversed = "";
+        for(int i=0; i < parts.size(); i++) {
+            int temp = Integer.parseInt(parts.get(i));
+            if(i == 0 && temp == 0) {
+                reversed += "0";
+            }
+            while(temp != 0) {
+                int lastNum = temp % 10;
+                //char lastChar = temp.charAt(temp.size() - 1);
+                if(lastNum % 2 == 0){
+                    // remainder is zero so quotient is even
+                    reversed = reversed + "0";
+                } else {
+                    //  remainder is ONE
+                    reversed = reversed + "1";
+                }
+                temp = Integer.parseInt(divideByTwo(temp + ""));
+            }
        }
-       // reverse string to get binary representation!
-        for (int i = this.reversed.length() - 1; i >= 0; i--) {
-            this.binaryValue = this.binaryValue + this.reversed.charAt(i);
-        }
-
-       // need to set byte version as ?
-
+       binaryValue = reverser((reversed));
    }
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     *  Method to divide a String by two
@@ -147,7 +147,7 @@ public class BrobInt {
    *  Method to reverse the value of this GinormousInt
    *  @return GinormousInt that is the reverse of the value of this GinormousInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt reverser() {
+   public BrobInt WrongReverser() {
        //convert internal value to base 10 and then reverse the digits //
        BrobInt obj = new BrobInt("0");
        for (int i = this.reversed.length() - 1; i >= 0; i--) { //need to incorporate throw UnsupportedOperationException//
@@ -162,13 +162,13 @@ public class BrobInt {
    *  @param  gint         GinormousInt to reverse its value
    *  @return GinormousInt that is the reverse of the value of the GinormousInt passed as argument
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public static BrobInt reverser( BrobInt bint ) {
-      String inputValue = bint.toString();
+   public static String reverser( String stringstring ) {
+      String inputValue = stringstring;
       String reversedValue = "";
-       for (int i = inputValue.length() - 1; i >= 0; i--){
-           reversedValue = inputValue.charAt(i) + reversedValue;
+       for (int i = stringstring.length() - 1; i >= 0; i--){
+           reversedValue = reversedValue + stringstring.charAt(i);
        }
-      return new BrobInt(reversedValue);
+      return reversedValue;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -177,8 +177,9 @@ public class BrobInt {
    *  @return GinormousInt that is the sum of the value of this GinormousInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt add( BrobInt bint ) {
-       String input1 = this.binaryValue; // e.g. "11100001"
+       String input1 = binaryValue; // e.g. "11100001"
        String input2 = bint.toBinary();
+       System.out.println("We are adding " + input1 + " and " + input2);
        while (input1.length() > input2.length()){
            input2 = "0" + input2;
        }
@@ -208,8 +209,9 @@ public class BrobInt {
        if(carry == 1) {
            sum = "1" + sum;
        }
-       System.out.println(sum);
-       // first convert sum to decimal!!
+
+       //System.out.println("The binary answer is " + sum);
+       // sum = binaryToDecimal(sum);
        return new BrobInt(sum);
 
     }
@@ -232,18 +234,28 @@ public class BrobInt {
      *  @return number in decimal form
      *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
      public static String binaryToDecimal(String binary) {
-         String number = "0";
-         int i = 0;
-         while (i < binary.length()) {
-             // multiply number by two
-             number = multByTwo(number);
-             // add next digit
+         BrobInt sum = new BrobInt("0");
+         for(int i = binary.length() - 1; i >= 0; i--) {
              if (binary.charAt(i) == '1') {
-                number = addOne(number);
+                 BrobInt partialSum = new BrobInt("" + (int)Math.pow(2, ((binary.length() - i) -1)));
+                 System.out.println("Partial sum is " + partialSum);
+                 sum = sum.add(partialSum);
+                 System.out.println("Sum is " + sum);
              }
-             i++;
          }
-         return number;
+         return sum.toString();
+         // String number = "0";
+         // int i = 0;
+         // while (i < binary.length()) {
+         //     // multiply number by two
+         //     number = multByTwo(number);
+         //     // add next digit
+         //     if (binary.charAt(i) == '1') {
+         //        number = addOne(number);
+         //     }
+         //     i++;
+         // }
+         // return number;
      }
     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      *  Method to add one (part of converting back to decimal)
@@ -321,7 +333,7 @@ public class BrobInt {
    *  @return GinormousInt that is the difference of the value of this GinormousInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt subtract( BrobInt bint) {
-       String top = this.binaryValue;
+       String top = binaryValue;
        String bottom = bint.toBinary();
        String result = "";
        int borrow = 0;
@@ -335,7 +347,7 @@ public class BrobInt {
        while (bottom.length() > top.length()) {
            top = "0" + top;
        }
-       for(int i = top.length()-1; i >= 0; i--) {
+       for(int i = 0; i >= top.length(); i++) {
            if(top.charAt(i) == '1' && bottom.charAt(i) == '1') {
                result = "0" + result;
            }
@@ -355,7 +367,7 @@ public class BrobInt {
            }
        }
        if(negative) {
-           this.sign = 1;
+           sign = 1;
        }
        return new BrobInt(binaryToDecimal(result));
    }
@@ -429,7 +441,7 @@ public class BrobInt {
    *        also using the java String "equals()" method -- THAT was easy, too..........
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public boolean equals( BrobInt gint ) {
-      return (binaryValue.equals( gint.toString() ));
+      return (inputValue.equals( gint.toString() ));
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -453,17 +465,16 @@ public class BrobInt {
    *  @return String  which is the String representation of this GinormousInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
-
-return this.inputValue;
+       return inputValue;
 
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to display an Array representation of this GinormousInt as its bytes
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public void toArray( byte[] d ) {
-      System.out.println( Arrays.toString( d ) );
-   }
+   /*public void toArray( byte[] d ) {
+     /* System.out.println( ArrayList.toString( d ) );
+ }*/
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  the main method redirects the user to the test class
@@ -473,7 +484,12 @@ return this.inputValue;
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the GinormousInt program!!\n" );
       System.out.println( "\n   You should run your tests from the GinormousIntTester...\n" );
-
+      BrobInt a = new BrobInt("10");
+      BrobInt b = new BrobInt("20");
+      //System.out.println("The answer is " + a.add(b));
+      BrobInt c = new BrobInt("0");
+      BrobInt d = new BrobInt("2");
+      System.out.println("The answer is " + c.add(d));
       System.exit( 0 );
    }
 }
