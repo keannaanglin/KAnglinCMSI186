@@ -20,6 +20,7 @@
  *
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.ArrayList;
+import java.math.BigInteger;
 
 public class BrobInt {
 
@@ -69,7 +70,6 @@ public class BrobInt {
         ArrayList <String> parts = new ArrayList<String>();
         for(int i = 0; i < quotient.length(); i += 8) {
             parts.add(quotient.substring(i, Math.min(i + 8, quotient.length())));
-            //still need to convert to binary, but does that need to go in here?
         }
         binaryValue = "";
         reversed = "";
@@ -233,8 +233,49 @@ public class BrobInt {
      *  Method to convert binary back to decimal
      *  @return number in decimal form
      *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-     public static String binaryToDecimal(String binary) {
-         BrobInt sum = new BrobInt("0");
+     public void binaryToDecimal(String binary) {
+         String result = "";
+         int chunks = new Integer((binary.length() /26) + 1);
+         int[] subChunk = null;
+         int j = 0;
+         String[] stringChunk = null;
+         ArrayList <String> chunk = new ArrayList<String>();
+         while ( j < chunks ) {
+             for(int i = 0; i < binary.length(); i += 26) {
+                 subChunk[j] = chunk.add(binary.substring(i, Math.min(i + 26, binary.length())));
+             } j++;
+         }
+         for(int k = 0; k < chunks; k++) {
+             subChunk[k] = Integer.parseInt(subChunk[k], 2);
+         }
+
+        for(int i = 0; i < chunks; i++) {
+            stringChunk[i] = Arrays.toString(subChunk[i]);
+        }
+        while (stringChunk.length < 8) {
+            for ( int i = stringChunk.length; i < 8; i++ ) {
+                stringChunk[i] = "0";
+            }
+        }
+        for(int i = 0; i < chunks; i++) {
+            result = result + Arrays.toString(stringChunk[i]);
+        }
+        return result;
+        //  //I know that i need to account for multiple binary string inputs, but i am not sure how to implement that.//
+        // for(int i = 0; i < binary.length(); i++) {
+        //     result += new String(Integer.valueOf(Integer.parseInt(binary, 2)).toString());
+        // }
+        // System.out.println("The decimal version is " + result);
+
+         /*System.out.println(new BigInteger(binary, 2).toString());*/
+
+         /*for(int i = binaryValue) {
+             System.out.println("binary string: " + binary + "in decimal is " + Integer.parseInt(binary, 2));
+         }
+         System.out.println("concatenated value is: " +
+         new String (Integer.valueOf(Integer.parseInt(binary, 2).toString())));
+         System.exit( 0 );
+        /* BrobInt sum = new BrobInt("0");
          for(int i = binary.length() - 1; i >= 0; i--) {
              if (binary.charAt(i) == '1') {
                  BrobInt partialSum = new BrobInt("" + (int)Math.pow(2, ((binary.length() - i) -1)));
@@ -255,7 +296,7 @@ public class BrobInt {
          //     }
          //     i++;
          // }
-         // return number;
+         // return number;*/
      }
     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      *  Method to add one (part of converting back to decimal)
@@ -333,7 +374,8 @@ public class BrobInt {
    *  @return GinormousInt that is the difference of the value of this GinormousInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt subtract( BrobInt bint) {
-       String top = binaryValue;
+       throw new UnsupportedOperationException( " this is not done!!");
+       /*String top = binaryValue;
        String bottom = bint.toBinary();
        String result = "";
        int borrow = 0;
@@ -369,7 +411,7 @@ public class BrobInt {
        if(negative) {
            sign = 1;
        }
-       return new BrobInt(binaryToDecimal(result));
+       return new BrobInt(binaryToDecimal(result));*/
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
