@@ -20,7 +20,7 @@
  *
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.ArrayList;
-import java.math.BigInteger;
+//import java.math.BigInteger;
 
 public class BrobInt {
 
@@ -211,7 +211,7 @@ public class BrobInt {
        }
 
        //System.out.println("The binary answer is " + sum);
-       // sum = binaryToDecimal(sum);
+       sum = binaryToDecimal(sum);
        return new BrobInt(sum);
 
     }
@@ -233,34 +233,49 @@ public class BrobInt {
      *  Method to convert binary back to decimal
      *  @return number in decimal form
      *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-     public void binaryToDecimal(String binary) {
-         String result = "";
-         int chunks = new Integer((binary.length() /26) + 1);
-         int[] subChunk = null;
-         int j = 0;
-         String[] stringChunk = null;
-         ArrayList <String> chunk = new ArrayList<String>();
-         while ( j < chunks ) {
-             for(int i = 0; i < binary.length(); i += 26) {
-                 subChunk[j] = chunk.add(binary.substring(i, Math.min(i + 26, binary.length())));
-             } j++;
-         }
-         for(int k = 0; k < chunks; k++) {
-             subChunk[k] = Integer.parseInt(subChunk[k], 2);
-         }
 
-        for(int i = 0; i < chunks; i++) {
-            stringChunk[i] = Arrays.toString(subChunk[i]);
-        }
-        while (stringChunk.length < 8) {
-            for ( int i = stringChunk.length; i < 8; i++ ) {
-                stringChunk[i] = "0";
-            }
-        }
-        for(int i = 0; i < chunks; i++) {
-            result = result + Arrays.toString(stringChunk[i]);
-        }
-        return result;
+   public static String binaryToDecimal( String args ) {
+      String result = Integer.toString( Integer.parseInt( args, 2 ) );
+      return result;
+   }
+     public static String binaryToDecimal2(String binary) {
+             int[] intArray = new int[0];
+             String result = "";
+             // int chunks = (binary.length() / 26) + 1;
+             System.out.println("did i get 8 chunks?");
+             // System.out.println(chunks);
+             int j = 0;
+             for( int i = 0; i < binary.length(); i+=26 ) {
+                 intArray[j] = Integer.parseInt( binary.substring( i, i+26 ), 2 );
+                 j++;
+             }
+
+             for ( int k = 0; k < intArray.length; k++ ) {
+                 result += Integer.toString(intArray[k]);
+             }
+             System.out.println("result?");
+             System.out.println(result);
+             return result;
+
+            // return Integer.parseInt(binary.substring(i, Math.min(i + 26, binary.length())), 2);
+        //      } j++;
+        //  }
+        //  for(int k = 0; k < subChunk.length(); k++) {
+        //      subChunk[k] = Integer.parseInt(subChunk[k], 2);
+        //  }
+        //
+        // for(int i = 0; i < chunks; i++) {
+        //     stringChunk[i] = Arrays.toString(subChunk[i]);
+        // }
+        // while (stringChunk.length < 8) {
+        //     for ( int i = stringChunk.length; i < 8; i++ ) {
+        //         stringChunk[i] = "0";
+        //     }
+        // }
+        // for(int i = 0; i < chunks; i++) {
+        //     result = result + Arrays.toString(stringChunk[i]);
+        // }
+        // return result;
         //  //I know that i need to account for multiple binary string inputs, but i am not sure how to implement that.//
         // for(int i = 0; i < binary.length(); i++) {
         //     result += new String(Integer.valueOf(Integer.parseInt(binary, 2)).toString());
@@ -283,8 +298,8 @@ public class BrobInt {
                  sum = sum.add(partialSum);
                  System.out.println("Sum is " + sum);
              }
-         }
-         return sum.toString();
+         }*/
+         //return sum.toString();
          // String number = "0";
          // int i = 0;
          // while (i < binary.length()) {
@@ -297,6 +312,7 @@ public class BrobInt {
          //     i++;
          // }
          // return number;*/
+         // throw new UnsupportedOperationException("  this has not been implemented ");
      }
     /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      *  Method to add one (part of converting back to decimal)
@@ -526,12 +542,12 @@ public class BrobInt {
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the GinormousInt program!!\n" );
       System.out.println( "\n   You should run your tests from the GinormousIntTester...\n" );
+      binaryToDecimal(args[0]);
       BrobInt a = new BrobInt("10");
       BrobInt b = new BrobInt("20");
+
       //System.out.println("The answer is " + a.add(b));
-      BrobInt c = new BrobInt("0");
-      BrobInt d = new BrobInt("2");
-      System.out.println("The answer is " + c.add(d));
       System.exit( 0 );
+
    }
 }
