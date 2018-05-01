@@ -1,22 +1,28 @@
-public static Fibonacci(BrobInt n) {
-    BrobInt zero = new BrobInt("0");
-    BrobInt one = new BrobInt("1");
-    BrobInt two = new BrobInt("2");
+public class Fibonacci {
+    public static BrobInt Fibonacci(BrobInt n) {
+        BrobInt zero = new BrobInt("0");
+        BrobInt one = new BrobInt("1");
+        BrobInt two = new BrobInt("2");
 
-    if (n.equals(zero))
-        return zeros;
-    if (n.equals(one) || n.equals(two))
-        return one;
+        if (n.equals(zero))
+            return zero;
+        if (n.equals(one) || n.equals(two))
+            return one;
 
-    BrobInt previous = new BrobInt(-1);
-    BrobInt result = new BrobInt(1);
+        BrobInt previous = new BrobInt("-1");
+        BrobInt result = new BrobInt("1");
+        BrobInt i = new BrobInt("0");
 
-    for (int i = 0; i <= n; i++) {
-
-        BrobInt sum = result.add(previous);
-        previous = result;
-        result = sum;
+        while ( !(i.equals(n)) ) {
+            BrobInt sum = result.add(previous);
+            previous = result;
+            result = sum;
+            i.add(new BrobInt("1"));
+        }
+        return result;
+    }
+    public static void main (String[] args) {
+        Fibonacci(new BrobInt(args[0]));
     }
 
-    return result;
-    }
+}
