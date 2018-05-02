@@ -21,7 +21,7 @@ BrobInt validate digits method      : 1 point
 BrobInt reverser method [of 2]      : 2 points
 
 BrobInt Tester class                : 1 point
-BrobInt add [of 9]                  : 0 points
+BrobInt add [of 9]                  : 9 points
 BrobInt subtract [of 7]             : 0 points
 BrobInt mult [of 7, 1 pt. EC]       : 0 point
 BrobInt div [of 2, 1 pt. EC]        : 0 point
@@ -30,7 +30,7 @@ BrobInt remainder [of 2, 1 pt. EC]  : 0 point
 Fib class file exists               : 1 point
 Fib constructor                     : 1 point
 Fib input error handling            : 0 point
-Fib output correct number [of 4]    : 0 points
+Fib output correct number [of 4]    : 1 points
 
 Minimum three files in repo (3)     : 3 points
 All files compile (3)               : 3 points
@@ -42,16 +42,44 @@ Total possible score: 40 points
 
 Evaluation
 ==========
-   16 out of 40 = 40.00% which is an F
+   29 out of 40 = 72.50% which is a C-minus
 
-Your code all compiles, but unfortunately it doesn't run.  When
-I ran the BrobIntTester, I got almost no output, and what I did
-get didn't match any of the desired output for the tests.  Also
-when I ran your Fibonacci program it basically never finishes,
-because you used recursion.  I warned you guys about this in class
-and recommended you NOT use it.
+Hi, KeAnna ---
 
-Feel free to come by during office hours if you have questions
-or want help on this next assignment.
+I'm sorry that this has been such a struggle for you, but I'm
+glad you have learned a lot from the exercise.  I appreciate
+that you have spent so much time on it, and I admire your
+persistence in sticking with it to try to find a solution.
 
-Nice work!
+I feel that at this point, you have given it your all, and I
+feel that should be acknowledged in the evaluation for this
+assignment.  I also feel that it's not truly fair to others in
+the class who got their BrobInt working, to just hand you the
+grade for something that doesn't really work.  This is not
+really about the fact that you "used another method for
+conversion".  It is about being equitable to all the members
+of the class.
+
+To that end, I'm bumping your mark for this assignment to a
+C-minus.  If you remember our conversation, I said that if you
+got your Fibonacci and your add methods working, you would get
+a "C" for the assignment.  I can see that your Fibonacci code
+has the proper format, although you don't check the input
+arguments.  I also see that your add method isn't really working,
+but you have tried hard to clear that hurdle, and except for the
+conversion back to decimal it seems you have the right idea.  In
+addition, you have a couple of "helper" methods that also seem to
+work, so I'm giving you full credit for the add method.  Finally,
+the assignment is quite late, and by the stated policy on the
+syllabus should rate no credit, so I'm compromising on that.
+
+That brings your numeric score to 72.5% which is a C-minus.
+
+I feel that is fair, and again, this is NOT a penalty for the
+particular method you used.  I feel it is a fair reflection of
+the overall situation.
+
+If you have any questions, feel free to contact me.
+
+Regards,
+Professor Johnson
