@@ -82,7 +82,7 @@ public class Tuple {
    * @return whether the tuple is impossible
    */
    public boolean isImpossible() {
-      return this.equals( IMPOSSIBLE );
+      return this == IMPOSSIBLE;
    }
 
   /**
@@ -141,17 +141,17 @@ public class Tuple {
    */
    public Tuple add( Tuple t ) {
 
-      if( length() != t.length()) {
-         throw new IllegalArgumentException();
-      }
+     if( length() != t.length()) {
+        throw new IllegalArgumentException();
+     }
 
-      Tuple sum = new Tuple(length());
-      for( int i = 0; i < length(); i++ ) {
-         sum.setElement(i, getElement( i ) + t.getElement( i ) );
-      }
+     Tuple sum = new Tuple(length());
+     for( int i = 0; i < length(); i++ ) {
+        sum.setElement(i, getElement( i ) + t.getElement( i ) );
+     }
 
-      return sum;
-   }
+     return sum;
+  }
 
   /**
    * Returns true iff this tuple is value-identical to t.
