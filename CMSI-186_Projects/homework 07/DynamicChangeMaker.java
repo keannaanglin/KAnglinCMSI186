@@ -34,12 +34,32 @@ public class DynamicChangeMaker{
     public static boolean checkTarget(int change) {
         return change < 0;
     }
+    /* This is a method to initialize the 0th column with 0,0,0, coin length tuples*/
 
     private static void fillColumnsWithZeros(Tuple[][] Table, int[] coins) {
       for (int i = 0; i < coins.length; i++) {
           Table[i][0] = new Tuple(coins.length);
       }
     }
+
+    /* This is a method to check for duplicate denominations
+    @ param int[] denom for the denominations
+    returns true if there is a duplicate
+    */
+    private static boolean checkDupes(int[] denom) throws IllegalArgumentException {
+    for (int i = 0; i < denom.length; i++) {
+        for (int j = i + 1 ; j < denom.length; j++) {
+            if ( ((denom[i]) == (denom[j])) &&  (i != j)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+
+
     /* the following code returns the optimal way for making change!!
      @param denom is the integer array of denom you need an optimal solution for
      @param change is for the # of change one desires to make
@@ -48,6 +68,7 @@ public class DynamicChangeMaker{
      public static Tuple makeChangeWithDynamicProgramming(int[] denom, int change) {
       if (validateChange(denom)) {return Tuple.IMPOSSIBLE;}
       if (checkTarget(change)) { return Tuple.IMPOSSIBLE; }
+      if (checkDupes(denom)) { return Tuple.IMPOSSIBLE;}
 
       int row = denom.length;
       int column = change + 1;
