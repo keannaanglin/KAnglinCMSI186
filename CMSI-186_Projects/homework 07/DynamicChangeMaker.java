@@ -1,101 +1,93 @@
-public class DynamicChangeMaker {
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * File name  :  DynamicChangeMaker.java
+ * Purpose    :  Learning exercise to implement arbitrarily large numbers and their operations
+ * @author    : KeAnna Anglin
+ * Date       :  05-02-2018
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+import java.util.Arrays;
 
-  public int[] OPT = null;
-  public String[][] optimalChange = null;
-  //public ArrayList<String> allPossibleChanges = new ArrayList<String>();
-  public int targetValue = 0;
-  public int[] denoms = null;
-  public String denominations = "";
 
-  public DynamicChangeMaker( String args[]  ) {
-      /*Tuple [] [] t = new Tuple [rows] [columns]
-      rows is # of denoms
-      columns is one plus target
-      i is going down
-      j is going across across the columns
-      t[i][j] = new Tuple (denoms.length)
-      need denoms[i] < j AND  if denoms[i] > j then impossible (so Tuple.IMPOSSIBLE)
-      need to see if you can go back, so if j < i then we cannot go back so impossible
-      if i is equal to j then make new Tuple t[i][j] = new Tuple(denoms.length); then t[i][j].setElement(i, 1);
-      now need t[i][j - denoms[i]] or if t[i][j - denoms[i]] is impossible then make it impossible, if not impossible then bring it over and add so t[i][j] += t[i][j - denoms[i]];
-      */
-    denominations = String.parseString(args[0]);
-    String[] denominations = denominations.split(",");
-    denoms = denominations;
-    targetValue = Integer.parseInt(args[1]);
-    Tuple[][] t = new Tuple[denoms.length][targetValue];
-  }
+public class DynamicChangeMaker{
 
-  public int makeChangeWithDynamicProgramming( int denoms[], int targetValue) {
+    private static int[] denoms = null;
+    private static Tuple denomsTuple = null;
+    private static Tuple[][] Table = null;
 
-    if (Tuple.isIMPOSSIBLE()) {
-      throw new NumberFormatException("Bad arguments provided \n ");
+
+    public DynamicChangeMaker(){
+        super();
     }
-    t[i][j-denoms[i]];
-    int i = 0;
-    for (int j = 0; j < targetValue; j++) {
-      if () {
 
+    public static Tuple makeChangeWithDynamicProgramming(int [] denom, int change){
+        int size = denom.length;
+        if(change <= 0){
+            throw new IllegalArgumentException();
+        }
+        for (int i = 0; i < size; i++){
+            for (int j = i + 1; j < size; j++){
+                if (denom[i] == denom[j] || denom[i] <= 0 || denom[j] <= 0 || denom.length < 1){
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+
+        Table = new Tuple[size][change + 1];
+        for (int row = 0; row < size; row++){
+            for (int col = 0; col < change + 1; col++){
+                if (col == 0){
+                    Table[row][col] = new Tuple(size);
+                } else {
+                    if (col < denom[row]){
+                        Table[row][col] = new Tuple(new int[0]);
+                        if (col - denom[row] >= 0){
+                            if (!(Table[row][col-denom[row]].isImpossible())){
+                                Table[row][col].add(Table[row][col - denom[row]]);
+                            }
+                        }
+                        if (row != 0){
+                            if (!(Table[row - 1][col].isImpossible())){
+                                if(Table[row][col].isImpossible() || Table[row - 1][col].total() < Table[row][col].total()){
+                                    Table[row][col] = Table[row - 1][col];
+                                }
+                            }
+                        }
+                    } else {
+                        Table[row][col] = new Tuple(size);
+                        Table[row][col].setElement(row, 1);
+                        if (col - denom[row] >= 0){
+                            if(Table[row][col - denom[row]].isImpossible()){
+                                Table[row][col] = new Tuple(new int[0]);
+                            } else {
+                                Table[row][col] = Table[row][col].add(Table[row][col - denom[row]]);
+                            }
+                        }
+                        if (row != 0){
+                            if(!(Table[row - 1][col].isImpossible())){
+                                if(Table[row][col].isImpossible() || Table[row - 1][col].total() < Table[row][col].total()){
+                                    Table[row][col] = Table[row - 1][col];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return Table[size -1][change];
+    }
+
+
+    public static void main(String args[]){
+        if ( args.length >= 2 ){
+         denoms = new int[args.length - 1];
+         for ( int i = 0; i < args.length - 1; i++ ){
+            denoms[i] = Integer.parseInt(args[i]);
+         }
+         System.out.println( "Minimum coins required is " + makeChangeWithDynamicProgramming(denoms, Integer.parseInt(args[args.length - 1]) ));
+      } else {
+         System.out.println( "\n   Sorry, the arguments you entered are invalid." );
+         System.out.println( "   The first argument must be an integer array of arguments with a value greater than or equal to 0\n" );
+         System.out.println( "   For the second argument enter the change you want to make (must be a positive number)");
       }
-    }
-    return 1;
-  }
-
-  public static void main ( String args[] ) {
-      if (args.length != 2) {
-           printUsage();
-           return;
-       }
-
-       try {
-           int amount = Integer.parseInt(args[1]);
-           if (amount < 0) {
-               System.out.println("Change cannot be made for negative amounts.");
-               System.out.println();
-               printUsage();
-               return;
-           }
-
-           String[] denominationStrings = args[0].split(",");
-           int[] denominations = new int[denominationStrings.length];
-
-           for (int i = 0; i < denominations.length; i++) {
-               denominations[i] = Integer.parseInt(denominationStrings[i]);
-               if (denominations[i] <= 0) {
-                   System.out.println("Denominations must all be greater than zero.");
-                   System.out.println();
-                   printUsage();
-                   return;
-               }
-
-               for (int j = 0; j < i; j++) {
-                   if (denominations[j] == denominations[i]) {
-                       System.out.println("Duplicate denominations are not allowed.");
-                       System.out.println();
-                       printUsage();
-                       return;
-                   }
-               }
-           }
-           Tally change = makeOptimalChange(denominations, amount);
-           if (change.isImpossible()) {
-               System.out.println("It is impossible to make " + amount + " cents with those denominations.");
-           } else {
-               int coinTotal = change.total();
-               System.out.println(amount + " cents can be made with " + coinTotal + " coin" +
-                       getSimplePluralSuffix(coinTotal) + " as follows:");
-
-               for (int i = 0; i < denominations.length; i++) {
-                   int coinCount = change.getElement(i);
-                   System.out.println("- "  + coinCount + " " + denominations[i] + "-cent coin" +
-                           getSimplePluralSuffix(coinCount));
-               }
-           }
-
-  }
-
-
-
-
-
+   }
 }
